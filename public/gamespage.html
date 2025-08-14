@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Games</title>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gamedatabase.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="js/navbar.js" defer></script>
+</head>
+<body>
+
+ <header>
+   <nav class="navbar">
+    <ul class="nav-left">
+      <li><a href="news.html">News</a></li>
+      <li><a href="leaderboards.html">Leaderboards</a></li>
+      <li><a href="gamespage.html">Games</a></li>
+      <li><a href="modspage.html">Mods</a></li>
+    </ul>
+
+    <div class="logo">
+     <a href="welcome.html">
+      <img src="site_images/VictoryVerseFinal.png" alt="Home">
+     </a>
+    </div>
+
+    <ul class="nav-right">
+      <li><a href="supportpage.html">Support</a></li>
+      <li class="profile-dropdown">
+          <a href="user.html" class="profilepicture">
+            <img src="images/profiles/defaultPFP.png" alt="User Profile">
+          </a>
+          <ul class="dropdown-menu">
+            <li><button id="logoutBtn" style="display: none;">Logout</button></li>
+          </ul>
+        </li>
+     </ul>
+    </nav>
+</header>
+
+
+<div class="games">
+<h1>Game Library</h1>
+<div id="wrapper">
+<p id="result"></p>
+</div>
+  <script>
+    $(document).ready( function() {
+      getGames();
+    });
+
+    async function getGames() {
+    const table = 'games';
+    const response = await fetch(`/tables?table=${encodeURIComponent(table)}`);
+    const output = await response.json();
+    const content = JSON.parse(output.content);
+
+    let result = '';
+    for (let i = 0; i < content.length; i++) {
+      result += `<a href="gamedetails.html?title=${content[i]['title']}">
+                  <img class="game-thumbnail" src="site_images/${content[i]['image']}" alt="${content[i]['title']}">
+                </a>`;
+    }
+    $('#result').html(result);
+
+    const tooltip = $('<div class="tooltip"></div>').appendTo('body').hide();
+
+    $('.game-thumbnail').hover(function () {
+      const title = $(this).attr('alt') || 'No title';
+      tooltip.text(title).show();
+      
+      $(this).on('mousemove.tooltip', function (e) {
+        tooltip.css({ top: e.pageY + 10, left: e.pageX + 10 });
+      });
+    }, function () {
+      tooltip.hide();
+      $(this).off('mousemove.tooltip');
+    });
+  }
+
+  </script>
+</div>
+
+
+
+</body>
+</html>

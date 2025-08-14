@@ -1,0 +1,593 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.background-video {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#bg-video {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.navbar {
+  background-color: #000000;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 20px;
+  align-items: center;
+}
+
+.nav-left a,
+.nav-right a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-left a:hover,
+.nav-right a:hover {
+  background-color: #555;
+  border-radius: 5px;
+}
+
+.logo {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.logo a {
+  display: inline-block;
+}
+
+.logo img {
+  display: block;
+  width: 100px;
+  height: auto;
+}
+
+.logo img:hover {
+  transform: scale(1.1);
+}
+
+.profilepicture img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.nav-right a.profilepicture:hover {
+  background-color: transparent;
+  border-radius: 0;
+}
+
+.profile-dropdown {
+  position: relative;
+}
+
+.profile-dropdown .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: #111;
+  border: 1px solid #444;
+  border-radius: 5px;
+  padding: 10px;
+  z-index: 10;
+}
+
+.profile-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  list-style: none;
+}
+
+.dropdown-menu button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+  color: #ebb70a;
+}
+
+  .h1 {
+  display: flex;           
+  justify-content: center;  
+  align-items: center;      
+  position: relative;
+  z-index: 2;
+  height: auto;           
+  text-align: center;              
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 25px;
+  color: #f8f8f8;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+  font-weight: bold;
+  margin: 100px 0 2px;
+}
+
+  .h2 {
+  display: flex;           
+  justify-content: center;  
+  align-items: center;      
+  position: relative;
+  z-index: 2; 
+  height: auto;           
+  text-align: center;      
+  margin: 20px 0 2px;         
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 24px;
+  color: #f8f8f8;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+  letter-spacing: 1px;
+  }
+
+.login {
+  text-align: center; 
+  border-radius: 10px; 
+  width: auto; 
+  margin: 50px auto; 
+}
+
+.login button {
+  background-color: transparent; 
+  color: white; 
+  padding: 40px 60px; 
+  font-size: 30px;
+  letter-spacing: 3px;
+  border-radius: 50px; 
+  cursor: pointer;
+  display: inline-block;
+  width: 30%;
+  box-sizing: border-box;
+  border: 2px solid white;
+}
+
+.login button:hover {
+  background-color: #34ae32; 
+  transform: scale(1.05);
+  border: none;
+}
+
+.banner-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 30px;
+}
+
+.banner-container {
+  position: relative;
+  width: 90%;
+  max-width: 1000px;
+}
+
+.user-banner {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background-color: #f0f0f0db;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #d66412;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.banner-settings {
+  position: absolute;
+  top: 0;
+  right: calc(5% - 20px);
+  z-index: 3;
+}
+
+.banner-settings img {
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  background: none;
+  border: none;
+}
+
+.banner-settings img:hover {
+  transform: scale(1.1);
+}
+
+.upload-modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.upload-content {
+  background: rgba(255, 255, 255, 0.95);
+  color: #000;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+.upload-content input[type="file"] {
+  width: 100%;
+}
+
+.upload-content button {
+  background-color: #d66412;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.upload-content button:hover {
+  background-color: #b14f0f;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #444;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.secondary-btn {
+  background-color: transparent;
+  color: #d66412;
+  border: 2px solid #d66412;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.secondary-btn:hover {
+  background-color: #d66412;
+  color: white;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 100%;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.user-name {
+  position: relative;
+  margin-top: 10px;
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+}
+
+body {
+  position: relative;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  background-attachment: fixed; 
+  color: white;
+}
+
+body.user-page {
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+}
+
+.leaderboards {
+  height: 200px;           
+  text-align: center;       
+  margin-top: 10px;  
+  font-size: 50px;
+  font-family: Georgia, "Courier New", monospace;
+  letter-spacing: 5px;
+  color: #FFFFFF;
+  background-color: #000000;
+}
+
+.mods-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #1f1f1f;
+  color: white;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mods-table th,
+.mods-table td {
+  border: 1px solid #444;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.mods-table th {
+  background-color: #333;
+  color: #ebb70a;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.mods-table tr:hover {
+  background-color: #2a2a2a;
+}
+
+.games {
+  font-family: 'Rajdhani', sans-serif;
+  height: 200px;          
+  text-align: center;       
+  margin-top: 10px;        
+  font-size: 50px;
+  letter-spacing: 5px;
+  color: #ffffff;
+}
+
+.games h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 100px;
+  letter-spacing: 5px;
+  color: #ffffff;
+}
+
+.mods {
+  height: 200px;            
+  text-align: center;      
+  margin-top: 10px;        
+  font-size: 50px;
+  font-family: Georgia, "Courier New", monospace;
+  letter-spacing: 5px;
+  color: #ffffff;
+}
+
+.news {
+  height: 200px;            
+  text-align: center;       
+  margin-top: 10px;         
+  font-size: 50px;
+  font-family: Georgia, "Courier New", monospace;
+  letter-spacing: 5px;
+  color: #ffffff;
+}
+
+.support {
+  height: 200px;            
+  text-align: center;      
+  margin-top: 10px;         
+  font-size: 50px;
+  font-family: Georgia, "Courier New", monospace;
+  letter-spacing: 5px;
+  color: #ffffff;
+}
+
+.detail {
+  height: 200px;         
+  text-align: center;      
+  margin-top: 40px;       
+  font-size: 1.5em;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 5px;
+  color: #ffffff;
+}
+
+.game-thumbnail {
+  width: 200px;   
+  height: 250px;  
+  margin: 0px;
+  border-radius: 10px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.game-thumbnail:hover {
+  transform: scale(1.05);
+}
+
+.tooltip {
+  position: absolute;
+  background-color: #000000dd;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 100;
+}
+
+body.game-detail-page {
+  position: relative;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  background-attachment: fixed; 
+  color: white;
+}
+
+body.game-detail-page::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.game-detail-container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  padding: 20px;
+  align-items: flex-start;
+  color: white;
+}
+
+.game-video iframe.game-trailer {
+  width: 500px;
+  height: 280px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.game-info {
+  flex: 1;
+}
+
+.game-sidebar {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 75px;
+  z-index: 10;
+}
+
+.sidebar-icon {
+  width: auto;
+  height: 75px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.sidebar-icon:hover {
+  transform: scale(1.1);
+}
+
+#game-detail td {
+  padding: 10px;
+  vertical-align: top;
+}
+
+#game-detail td:first-child {
+  font-weight: bold;
+  width: 150px;
+}
+
+/* By K Yoon */
+
+#wrapper {
+  max-width: 1024px;
+  margin: auto;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  color: black;
+}
+
+#result {
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 0px;
+  font-size: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+#news-list {
+  text-align: left;
+  list-style: 1;
+  padding: 0;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: large;
+}
+
+#news-window {
+  width: 100%;
+  height: 480px;
+  border: dotted 1px #ccc;
+  margin-top: 20px;
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Support</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="gamedatabase.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="js/navbar.js" defer></script>
+</head>
+<body>
+
+  <header>
+   <nav class="navbar">
+    <ul class="nav-left">
+      <li><a href="news.html">News</a></li>
+      <li><a href="leaderboards.html">Leaderboards</a></li>
+      <li><a href="gamespage.html">Games</a></li>
+      <li><a href="modspage.html">Mods</a></li>
+    </ul>
+
+    <div class="logo">
+     <a href="welcome.html">
+      <img src="site_images/VictoryVerseFinal.png" alt="Home">
+     </a>
+    </div>
+
+    <ul class="nav-right">
+      <li><a href="supportpage.html">Support</a></li>
+      <li class="profile-dropdown">
+          <a href="user.html" class="profilepicture">
+            <img src="images/profiles/defaultPFP.png" alt="User Profile">
+          </a>
+          <ul class="dropdown-menu">
+            <li><button id="logoutBtn" style="display: none;">Logout</button></li>
+          </ul>
+        </li>
+     </ul>
+    </nav>
+</header>
+
+<div class="support">
+<h1>Support</h1>
+</div>
+
+<div id="support-form-container" style="max-width: 600px; margin: 20px auto; padding: 20px; background: #1f1f1f; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.4);">
+  <form id="supportForm">
+    <label for="issue_type" style="font-size: 18px;">Issue Type:</label><br>
+    <select id="issue_type" name="issue_type" required style="width: 100%; padding: 10px; margin-bottom: 20px;">
+      <option value="">-Select an Issue-</option>
+      <option value="Login Problem">Login Problem</option>
+      <option value="Bug Report">Bug Report</option>
+      <option value="Account Issue">Account Issue</option>
+      <option value="Other">Other</option>
+    </select><br>
+
+    <label for="issue_description" style="font-size: 18px;">Describe the Issue:</label><br>
+    <textarea id="issue_description" name="issue_description" rows="6" required style="width: 100%; padding: 10px; margin-bottom: 20px;"></textarea><br>
+
+    <button type="submit" style="background-color: #ebb70a; border: none; padding: 10px 20px; font-size: 18px; border-radius: 5px; cursor: pointer;">Submit Ticket</button>
+  </form>
+
+  <div id="support-message" style="margin-top: 20px; font-size: 18px; display: none;"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('supportForm');
+  const messageDiv = document.getElementById('support-message');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const issueType = document.getElementById('issue_type').value;
+    const issueDescription = document.getElementById('issue_description').value;
+
+    const res = await fetch('/submit-ticket', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ issue_type: issueType, issue_description: issueDescription })
+    });
+
+    const message = await res.text();
+    messageDiv.textContent = message;
+    messageDiv.style.display = 'block';
+    if (res.ok) {
+      form.reset();
+      messageDiv.style.color = 'limegreen';
+    } else {
+      messageDiv.style.color = 'red';
+    }
+  });
+});
+</script>
+
+</body>
+</html>
+</body>
+</html>

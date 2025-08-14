@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+
+  <style>
+    body {
+      background: #121212;
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    form {
+      background: #1f1f1f;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #e15d25;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #e15d25;
+    }
+
+  </style>
+</head>
+<body>
+<form id="registerForm">
+  <h2>Create an Account</h2>
+  <input name="username" placeholder="Username" required />
+  <input name="email" type="email" placeholder="Email" required />
+  <input name="password" type="password" placeholder="Password" required />
+  <button type="submit">Register</button>
+</form>
+<p id="registerMessage"></p>
+
+<script>
+  document.getElementById('registerForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const data = {
+      username: formData.get('username'),
+      email: formData.get('email'),
+      password: formData.get('password')
+    };
+
+    const res = await fetch('/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    const msg = document.getElementById('registerMessage');
+
+    if (res.ok) {
+      msg.textContent = '\u2705 Registered and logged in!';
+      msg.style.color = 'lime';
+      window.location.href = 'user.html';
+    } else {
+      const errorText = await res.text();
+      msg.textContent = '\u274C' + errorText;
+      msg.style.color = 'red';
+    }
+  });
+  
+</script>
+</body>
+</html>

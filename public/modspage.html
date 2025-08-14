@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Mods</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="gamedatabase.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="js/navbar.js" defer></script>
+</head>
+<body>
+
+  <header>
+   <nav class="navbar">
+    <ul class="nav-left">
+      <li><a href="news.html">News</a></li>
+      <li><a href="leaderboards.html">Leaderboards</a></li>
+      <li><a href="gamespage.html">Games</a></li>
+      <li><a href="modspage.html">Mods</a></li>
+    </ul>
+
+    <div class="logo">
+     <a href="welcome.html">
+      <img src="site_images/VictoryVerseFinal.png" alt="Home">
+     </a>
+    </div>
+
+    <ul class="nav-right">
+      <li><a href="supportpage.html">Support</a></li>
+      <li class="profile-dropdown">
+          <a href="user.html" class="profilepicture">
+            <img src="images/profiles/defaultPFP.png" alt="User Profile">
+          </a>
+          <ul class="dropdown-menu">
+            <li><button id="logoutBtn" style="display: none;">Logout</button></li>
+          </ul>
+        </li>
+     </ul>
+    </nav>
+</header>
+
+
+<div class="mods">
+<h1>Mods</h1>
+<div id="wrapper">
+  <p id="result"></p>
+  </div>
+  <script>
+    $(document).ready( function() {
+      callServerFunction();
+    });
+  
+    async function callServerFunction() {
+      const table = 'mods';
+      const response = await fetch(`/tables?table=${encodeURIComponent(table)}`);
+      console.log(response.result);
+      output = await response.json();
+      console.log(output);
+      console.log(output);
+      console.log(output.content);
+  
+      content = JSON.parse(output.content);
+      console.log(content);
+      
+      let result = '<table class="mods-table" width="100%">';
+      result += '<tr>';
+        Object.keys(content[0]).keys().forEach(function (k) {
+          result += `<th>${Object.keys(content[0])[k]}</th>`;
+        });
+      result += '</tr>';
+      for (let i = 0; i < content.length; i++) {
+        console.log(content[i]);
+        result += '<tr>';
+          Object.keys(content[i]).keys().forEach(function (k) {
+            result += `<td>${Object.values(content[i])[k]}</td>`;
+          });
+        result += '</tr>';
+      }
+      $('#result').html(result);
+    }
+    </script>
+  </div>
+</div>
+
+</body>
+</html>

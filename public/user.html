@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Page</title>
+<link rel="stylesheet" href="gamedatabase.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="js/navbar.js" defer></script>
+</head>
+
+<body class = "user-page">
+
+    <header>
+   <nav class="navbar">
+    <ul class="nav-left">
+      <li><a href="news.html">News</a></li>
+      <li><a href="leaderboards.html">Leaderboards</a></li>
+      <li><a href="gamespage.html">Games</a></li>
+      <li><a href="modspage.html">Mods</a></li>
+    </ul>
+
+    <div class="logo">
+     <a href="welcome.html">
+      <img src="site_images/VictoryVerseFinal.png" alt="Home">
+     </a>
+    </div>
+
+    <ul class="nav-right">
+        <li><a href="supportpage.html">Support</a></li>
+        <li class="profile-dropdown">
+            <a href="user.html" class="profilepicture">
+              <img src="images/profiles/defaultPFP.png" alt="User Profile">
+            </a>
+            <ul class="dropdown-menu">
+              <li><button id="logoutBtn" style="display: none;">Logout</button></li>
+            </ul>
+          </li>
+       </ul>
+    </nav>
+</header>
+  
+  <div id="uploadModal" class="upload-modal">
+    <div class="upload-content">
+      <span class="close-btn" id="closeUpload">&times;</span>
+      <h2>Customize Your Profile</h2>
+      <form id="imageUploadForm" enctype="multipart/form-data">
+        <label>Upload Profile Picture:</label><br>
+        <input type="file" name="profile_picture" accept="image/*"><br><br>
+  
+        <label>Upload Banner Image:</label><br>
+        <input type="file" name="banner_image" accept="image/*"><br><br>
+  
+        <button type="submit">Upload</button>
+
+        <hr style="margin: 20px 0;">
+
+        <button type="button" id="removeProfilePic" class="secondary-btn">Remove Profile Picture</button><br><br>
+        <button type="button" id="removeBanner" class="secondary-btn">Remove Banner</button>
+      </form>
+    </div>
+  </div>
+
+<div class="banner-wrapper">
+    <div class="banner-container">
+      <section class="user-banner" id="userBanner">
+        <div class="profile-container">
+          <img src="images/profiles/defaultPFP.png" class="profile-pic" id="profilePic" alt="Profile Picture">
+          <div class="user-name" id="usernameDisplay">Username</div>
+        </div>
+      </section>
+    </div>
+  
+    <div class="banner-settings">
+      <img src="site_images/settings_logo.png" alt="Settings" id="openSettings">
+    </div>
+  </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const uploadModal = document.getElementById('uploadModal');
+    const openBtn = document.getElementById('openSettings');
+    const closeBtn = document.getElementById('closeUpload');
+
+    openBtn.onclick = () => uploadModal.style.display = 'flex';
+    closeBtn.onclick = () => uploadModal.style.display = 'none';
+
+    window.onclick = (e) => {
+      if (e.target === uploadModal) {
+        uploadModal.style.display = 'none';
+      }
+    };
+
+    document.getElementById('imageUploadForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+
+      const res = await fetch('/upload-images', {
+        method: 'POST',
+        body: formData
+      });
+
+      const message = await res.text();
+      alert(message);
+      if (res.ok) {
+        uploadModal.style.display = 'none';
+        window.location.reload();
+      }
+    });
+
+    document.getElementById('removeProfilePic').addEventListener('click', async () => {
+      const res = await fetch('/remove-profile-picture', { method: 'POST' });
+      const message = await res.text();
+      alert(message);
+      if (res.ok) window.location.reload();
+    });
+
+    document.getElementById('removeBanner').addEventListener('click', async () => {
+      const res = await fetch('/remove-banner', { method: 'POST' });
+      const message = await res.text();
+      alert(message);
+      if (res.ok) window.location.reload();
+    });
+
+    try {
+      const res = await fetch('/getCurrentUser');
+      if (!res.ok) throw new Error('Not logged in');
+
+      const user = await res.json();
+      document.getElementById('userBanner').style.backgroundImage = `url('images/banners/${user.banner_image}')`;
+      document.getElementById('profilePic').src = 'images/profiles/' + user.profile_picture;
+      document.getElementById('usernameDisplay').textContent = user.username;
+    } catch (err) {
+      console.error('Error fetching user info:', err);
+    }
+  });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Games</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="gamedatabase.css">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="js/navbar.js" defer></script>
+</head>
+<body>
+
+  <header>
+   <nav class="navbar">
+    <ul class="nav-left">
+      <li><a href="news.html">News</a></li>
+      <li><a href="leaderboards.html">Leaderboards</a></li>
+      <li><a href="gamespage.html">Games</a></li>
+      <li><a href="modspage.html">Mods</a></li>
+    </ul>
+
+    <div class="logo">
+     <a href="welcome.html">
+      <img src="site_images/VictoryVerseFinal.png" alt="Home">
+     </a>
+    </div>
+
+    <ul class="nav-right">
+      <li><a href="supportpage.html">Support</a></li>
+      <li class="profile-dropdown">
+          <a href="user.html" class="profilepicture">
+            <img src="images/profiles/defaultPFP.png" alt="User Profile">
+          </a>
+          <ul class="dropdown-menu">
+            <li><button id="logoutBtn" style="display: none;">Logout</button></li>
+          </ul>
+        </li>
+     </ul>
+    </nav>
+</header>
+
+<div class="detail">
+<h1 id="game_title"></h1>
+<div id = "wrapper">
+<p id="result"></p>
+
+<script>
+var queryDict = {};
+location.search.substr(1).split("&").forEach(function(item) {
+    queryDict[item.split("=")[0]] = item.split("=")[1]
+});
+const game = decodeURI(queryDict.title);
+
+$(document).ready( function() {
+  $('#game_title').html('<h1>' + game + '</h1>');
+  getGames(game);
+});
+
+async function getGames(game) {
+  const table = 'games';
+  const response = await fetch(`/tables?table=${encodeURIComponent(table)}`);
+  document.body.classList.add('game-detail-page');
+  output = await response.json();
+  content = JSON.parse(output.content);
+
+let result = `
+  <div class="game-detail-container">
+    <div class="game-video">
+`;
+
+for (let i = 0; i < content.length; i++) {
+  if (content[i]['title'] === game) {
+    const genre = content[i].genre;
+    const game_id = content[i].game_id;
+    const created_at = content[i].created_at;
+    const description = content[i].description;
+    const developer_id = content[i].developer_id;
+    const platform = content[i].platform;
+    const releaseDate = new Date(content[i].release_date).toISOString().split('T')[0];
+    const dlc_available = content[i].dlc_available;
+    const backgroundImage = content[i].background_image;
+    const videoURL = content[i].video_url;
+
+    if (backgroundImage) {
+      document.body.style.backgroundImage = `url('site_images/${backgroundImage}')`;
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundPosition = 'center';
+      document.body.style.backgroundRepeat = 'no-repeat';
+    }
+
+    if (videoURL) {
+      result += `<iframe class="game-trailer" src="${videoURL}" allowfullscreen></iframe>`;
+    }
+
+    result += `
+    </div>
+    <div class="game-info">
+      <table id="game-detail" width="100%">
+        <tr><td><strong>Genre</strong></td><td>${genre}</td></tr>
+        <tr><td><strong>Description</strong></td><td>${description}</td></tr>
+        <tr><td><strong>Platform</strong></td><td>${platform}</td></tr>
+        <tr><td><strong>Release Date</strong></td><td>${releaseDate}</td></tr>
+        <tr><td><strong>DLC Available</strong></td><td>${dlc_available}</td></tr>
+      </table>
+    </div>
+    `;
+    result += `
+    <div class="game-sidebar">
+      <a href="news.html"><img src="site_images/news_logo.jpg" alt="News" class="sidebar-icon"></a>
+      <a href="modspage.html"><img src="site_images/mods_logo.jpg" alt="Mods" class="sidebar-icon"></a>
+      <a href="leaderboards.html"><img src="site_images/leaderboard_logo.jpg" alt="Leaderboards" class="sidebar-icon"></a>
+  </div>
+    `;
+  }
+}
+
+$('#result').html(result);
+}
+
+</script>
+</div>
+</div>
+</body>
+</html>

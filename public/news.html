@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>News</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="gamedatabase.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="js/navbar.js" defer></script>
+</head>
+<body>
+
+  <header>
+   <nav class="navbar">
+    <ul class="nav-left">
+      <li><a href="news.html">News</a></li>
+      <li><a href="leaderboards.html">Leaderboards</a></li>
+      <li><a href="gamespage.html">Games</a></li>
+      <li><a href="modspage.html">Mods</a></li>
+    </ul>
+
+    <div class="logo">
+     <a href="welcome.html">
+      <img src="site_images/VictoryVerseFinal.png" alt="Home">
+     </a>
+    </div>
+
+    <ul class="nav-right">
+      <li><a href="supportpage.html">Support</a></li>
+      <li class="profile-dropdown">
+          <a href="user.html" class="profilepicture">
+            <img src="images/profiles/defaultPFP.png" alt="User Profile">
+          </a>
+          <ul class="dropdown-menu">
+            <li><button id="logoutBtn" style="display: none;">Logout</button></li>
+          </ul>
+        </li>
+     </ul>
+    </nav>
+</header>
+
+
+<div class="news">
+<h1>News</h1>
+</div>
+<div id="wrapper">
+  <ol id="news-list"></ol>
+  <iframe name="news" id="news-window"></iframe>
+</div>
+<script>
+  fetch('http://localhost:3000/news')
+    .then(res => res.json())
+    .then(data => {
+      const ol = document.getElementById('news-list');
+      data.forEach(article => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        console.log(article)
+        a.href = article.link;
+        a.textContent = article.title;
+        a.target = "news";
+        li.appendChild(a);
+        ol.appendChild(li);
+      });
+    })
+    .catch(err => console.error('Error:', err));
+</script>
+</body>
+</html>

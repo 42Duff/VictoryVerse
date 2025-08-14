@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Leaderboards</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="gamedatabase.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="js/navbar.js" defer></script>
+</head>
+<body>
+
+  <header>
+   <nav class="navbar">
+    <ul class="nav-left">
+      <li><a href="news.html">News</a></li>
+      <li><a href="leaderboards.html">Leaderboards</a></li>
+      <li><a href="gamespage.html">Games</a></li>
+      <li><a href="modspage.html">Mods</a></li>
+    </ul>
+
+    <div class="logo">
+     <a href="welcome.html">
+      <img src="site_images/VictoryVerseFinal.png" alt="Home">
+     </a>
+    </div>
+
+    <ul class="nav-right">
+      <li><a href="supportpage.html">Support</a></li>
+      <li class="profile-dropdown">
+          <a href="user.html" class="profilepicture">
+            <img src="images/profiles/defaultPFP.png" alt="User Profile">
+          </a>
+          <ul class="dropdown-menu">
+            <li><button id="logoutBtn" style="display: none;">Logout</button></li>
+          </ul>
+        </li>
+     </ul>
+    </nav>
+</header>
+
+
+<div class="leaderboards">
+<h1>Leaderboards</h1>
+</div>
+<div id="wrapper">
+  <p>Choose a game to see the leader board</p>
+  <select id="game" name="game">
+    <option value="rocketleague">Rocket League</option>
+    <option value="callofduty">Call of Duty</option>
+    <option value="apexlegends">Apex Legends</option>
+    <option value="fortnite">Fortnite</option>
+    <option value="gta5">GTA 5</option>
+  </select>
+  <input type="number" id="top" name="top" min="10" max="100" step="5">
+  <button onclick="callServerFunction()">Get the Leaderboard</button>
+  <p id="result"></p>
+  </div>
+  <script>
+  const gameNames = {
+    'rocketleague': 'Rocket League',
+    'callofduty': 'Call of Duty',
+    'apexlegends': 'Apex Legends',
+    'fortnite': 'Fortnite',
+    'gta6': 'Great Theft Auto 5'
+  };
+  async function callServerFunction() {
+    const game = $('#game').val();
+    const top = $('#top').val();
+    const response = await fetch(`/leaderboard?game=${encodeURIComponent(game)}&top=${top}`);
+    output = await response.json();
+    leaders = JSON.parse(output.result);
+    let content = '<h2>' + gameNames[game] + '</h2><table width="800px" class="mods-table">';
+    content += '<tr><th width="10%">Rank</th><th width="40%">Name</th><th width="50%">Stat</th></tr>';
+    for (let i = 0; i < leaders.length; i++) {
+      content += '<tr><td>' + leaders[i].rank 
+        + '</td><td>' + leaders[i].playerName + 
+          '</td><td>' + leaders[i].playerStat + '</td></tr>';
+    }
+    content += '</table>'
+    $('#result').html(content);
+    console.log(output.result);
+  }
+  </script>
+</body>
+</html>
