@@ -31,6 +31,14 @@ copy .env.example .env  # Windows
 
 # Fill in environment variables
 
+## Database Setup
+1. Open MySQL Workbench (or your preferred client).
+2. Create a new database (for example: `victoryverse`).
+3. Run the SQL script located in `db/schema_and_seed.sql` to create tables and insert starter data.
+   ```sql
+   source schema_and_seed.sql;
+4. Update your .env file with your database name, username, and password.
+
 # Run the app
 npm start
 ```
