@@ -1,4 +1,4 @@
-#  🎮 VictoryVerse
+# VictoryVerse
 VictoryVerse is a fullstack gaming hub for competitive gamers - featuring user profiles, live leaderboards, news scraping, and mod downloads.
 
 ## Features
