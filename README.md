@@ -14,7 +14,16 @@ Backend: Node.js, Express.js
 Database: MySQL (Workbench)  
 Other: Axios, Cheerio, Puppeteer
 
-## Screenshots
+## UI Screenshots
+
+<img width="1920" height="850" alt="VictoryVerseHome" src="https://github.com/user-attachments/assets/3117d599-d146-415f-b391-911b99f684da" />
+
+
+<img width="1920" height="862" alt="VictoryVerseLogIn" src="https://github.com/user-attachments/assets/41d8d837-2b66-4b31-bced-09c9bf0ba032" />
+
+
+<img width="1920" height="856" alt="VictoryVerseUser" src="https://github.com/user-attachments/assets/77fcab19-dea1-4371-87bb-b7c539c37f31" />
+
 
 ## Installation & Setup
 ```bash
@@ -36,7 +45,9 @@ copy .env.example .env  # Windows
 2. Create a new database (for example: `victoryverse`).
 3. Run the SQL script located in `db/schema_and_seed.sql` to create tables and insert starter data.
    ```sql
-   source db/schema_and_seed.sql;
+   source db/schema_and_seed.sql;```
+   
+
 4. Update your .env file with your database name, username, and password.
 
 # Run the app
